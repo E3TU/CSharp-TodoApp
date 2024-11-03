@@ -2,6 +2,19 @@
 
 namespace TodoApp
 {
+    public class Task
+    {
+        public int Id { get; set; }
+        public bool IsDone { get; set; }
+        public string Description { get; set; }
+
+        public Task(int id, string description)
+        {
+            Id = id;
+            Description = description;
+            IsDone = false;
+        }
+    }
     class TodoApp
     {
         static void Main(string[] args)
