@@ -26,13 +26,13 @@ namespace TodoApp
 
             do
             {
+                Console.WriteLine("");
                 Console.WriteLine("Todo App");
                 Console.WriteLine("------------");
                 Console.WriteLine("1. Add Task");
                 Console.WriteLine("2. View Tasks");
-                Console.WriteLine("3. Mark Task AsDone");
-                Console.WriteLine("4. Remove Task");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("3. Remove Task");
+                Console.WriteLine("4. Exit");
                 Console.Write("Choose an option: ");
             
                 option = Convert.ToInt32(Console.ReadLine());
@@ -46,19 +46,16 @@ namespace TodoApp
                         ViewTasks();
                         break;
                     case 3:
-                        Console.WriteLine("Which task do you want to mark as done?");
+                        RemoveTask();
                         break;
                     case 4:
-                        Console.WriteLine("Which task do you want to remove?");
-                        break;
-                    case 5:
                         Console.WriteLine("Exited successfully!");
                         break;
                     default:
                         Console.WriteLine("Invalid choice");
                         break;
                 }
-            } while (option != 5);
+            } while (option != 4);
         }
 
         static void AddTask()
@@ -70,13 +67,26 @@ namespace TodoApp
                 Console.WriteLine("Task cannot be empty");
             }
             tasks.Add(new TodoItem(currentId++, task));
+            Console.WriteLine("Task added successfully!");
         }
 
         static void ViewTasks()
         {
+            Console.WriteLine("Tasks:");
             for (int i = 0; i < tasks.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {tasks[i].Task}");
+            }
+        }
+
+        static void RemoveTask()
+        {
+            Console.Write("Enter id to remove task: ");
+            if (int.TryParse(Console.ReadLine(), out int id) && id > 0 && id <= tasks.Count)
+            {
+                // string removedTask = tasks[id - 1].Task;
+                tasks.RemoveAt(id - 1);
+                Console.WriteLine("Task removed successfully!");
             }
         }
     }
