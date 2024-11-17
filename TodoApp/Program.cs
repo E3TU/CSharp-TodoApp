@@ -66,8 +66,11 @@ namespace TodoApp
             {
                 Console.WriteLine("Task cannot be empty");
             }
-            tasks.Add(new TodoItem(currentId++, task));
-            Console.WriteLine("Task added successfully!");
+            else
+            {
+                tasks.Add(new TodoItem(currentId++, task));
+                Console.WriteLine("Task added successfully!");
+            }
         }
 
         static void ViewTasks()
