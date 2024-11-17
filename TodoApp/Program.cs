@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace TodoApp
 {
@@ -17,13 +19,14 @@ namespace TodoApp
     }
     class TodoApp
     {
-        static List<TodoItem> tasks = new List<TodoItem>();
-        static int currentId = 1;
+        static List<TodoItem> _tasks = new List<TodoItem>();
+        static int _currentId = 1;
+        static string filePath = "tasks.txt";
+
         static void Main(string[] args)
         {
-            
             int option;
-
+            
             do
             {
                 Console.WriteLine("");
@@ -68,27 +71,34 @@ namespace TodoApp
             }
             else
             {
-                tasks.Add(new TodoItem(currentId++, task));
+                _tasks.Add(new TodoItem(_currentId++, task));
                 Console.WriteLine("Task added successfully!");
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    for (int i = 0; i < _tasks.Count; i++)
+                    {
+                        writer.WriteLine($"{_tasks[i].Id}. {_tasks[i].Task}");
+                    }
+                }
             }
         }
 
         static void ViewTasks()
         {
             Console.WriteLine("Tasks:");
-            for (int i = 0; i < tasks.Count; i++)
+            for (int i = 0; i < _tasks.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {tasks[i].Task}");
+                Console.WriteLine($"{i + 1}. {_tasks[i].Task}");
             }
         }
 
         static void RemoveTask()
         {
             Console.Write("Enter id to remove task: ");
-            if (int.TryParse(Console.ReadLine(), out int id) && id > 0 && id <= tasks.Count)
+            if (int.TryParse(Console.ReadLine(), out int id) && id > 0 && id <= _tasks.Count)
             {
                 // string removedTask = tasks[id - 1].Task;
-                tasks.RemoveAt(id - 1);
+                _tasks.RemoveAt(id - 1);
                 Console.WriteLine("Task removed successfully!");
             }
         }
